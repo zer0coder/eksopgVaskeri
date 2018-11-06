@@ -20,6 +20,7 @@ namespace ModelsAndContext.Migrations
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
             context.WasherServices.AddOrUpdate(s => s.Name, new WasherService() { Name = "Vaskeri Tomsen", DaytimeOnly = true });
+            context.WasherServices.AddOrUpdate(s => s.Name, new WasherService() { Name = "Johns Vaskeri", DaytimeOnly = false });
         }
     }
 }
