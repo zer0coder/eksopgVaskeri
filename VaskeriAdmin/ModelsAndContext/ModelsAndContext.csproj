@@ -64,11 +64,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context\VaskeriContext.cs" />
-    <Compile Include="Migrations\201811060939416_test.cs" />
-    <Compile Include="Migrations\201811060939416_test.Designer.cs">
-      <DependentUpon>201811060939416_test.cs</DependentUpon>
+    <Compile Include="Migrations\201811131025053_reset.cs" />
+    <Compile Include="Migrations\201811131025053_reset.Designer.cs">
+      <DependentUpon>201811131025053_reset.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811131637510_reserUpdate.cs" />
+    <Compile Include="Migrations\201811131637510_reserUpdate.Designer.cs">
+      <DependentUpon>201811131637510_reserUpdate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\DoneReservation.cs" />
     <Compile Include="Models\DryerProgram.cs" />
     <Compile Include="Models\Machine.cs" />
     <Compile Include="Models\Program.cs" />
@@ -105,8 +110,11 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201811060939416_test.resx">
-      <DependentUpon>201811060939416_test.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201811131025053_reset.resx">
+      <DependentUpon>201811131025053_reset.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811131637510_reserUpdate.resx">
+      <DependentUpon>201811131637510_reserUpdate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

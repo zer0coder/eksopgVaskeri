@@ -1,0 +1,116 @@
+﻿@model VaskeriClient.Models.UserFront
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>@Model.Service.Name</h2>
+
+<div>
+    <h4>Hello, @Model.User.Username</h4>
+    <hr />
+    <dl class="dl-horizontal"></dl>
+    <div>
+        <h3>Forbrug</h3>
+        <table class="table">
+
+            <thead>
+                <tr>
+                    <th>Reservation</th>
+                    <th>Cost</th>
+                </tr>
+            </thead>
+
+            @foreach (var item in Model.DoneReservations)
+            {
+                <tr>
+                    <td>@item.Reservation.Id (Dato: @item.Reservation.Date)</td>
+                    <td>@item.Cost</td>
+                </tr>
+            }
+        </table>
+        <h4>Total forbrug: @Model.TotalCost</h4>
+        <hr />
+        <h3>Reservations (Current: @Model.User.NumberOfReservations)</h3>
+        @if (@Model.User.NumberOfReservations < Model.Service.AllowedMaxReservations)
+        {
+            <p>@Html.ActionLink("Create new reservation", "CreateReservation")</p>
+        }
+        else
+        {
+            <p>Maximum reservations reached!</p>
+        }
+        <table class="table">
+
+            <thead>
+                <tr>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+
+            @foreach (var item in Model.Reservations)
+            {
+                <tr>
+                    @if (item.Finished)
+                    {
+                        <td>Done...</td>
+                    }
+                    else
+                    {
+                        if (item.Active)
+                        {
+                            <td>Running...</td>
+                        }
+                        else
+                        {
+                            <td>Waiting...</td>
+                        }
+                    }
+                    <td>@item.Date</td>
+                    <td>@item.TimeID</td>
+                </tr>
+            }
+        </table>
+    </div>
+    <hr />
+    <div>
+        <h4>Machines</h4>
+        <p>@Html.ActionLink("Start a machine", "StartMachine")</p>
+        <table class="table">
+
+            <thead>
+                <tr>
+                    <th>Machine Number</th>
+                    <th>Type</th>
+                    <th>Reserved?</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            @foreach (var item in Model.Machines)
+            {
+            <tr>
+                <td>@item.Number</td>
+                @if (item.Type == ModelsAndContext.Models.MachineType.WASHER)
+                {
+                    <td>Washingmachine</td>
+                }
+                else
+                {
+                    <td>Dryer</td>
+                }
+
+                @if(item.InUse)
+                {
+                    <td>In Use...</td>
+                } else
+                {
+                    <td>Free</td>
+                }
+            </tr>
+            }
+        </table>
+    </div>
+</div>

@@ -18,12 +18,9 @@ namespace ModelsAndContext.Models
 
         [Required]
         [DisplayName("From")]
-        public TimeSpan Start { get; set; }
+        public TimeSpan Length { get; set; }
 
         [Required]
-        [DisplayName("To")]
-        public TimeSpan End { get; set; }
-
-        public WasherService Service { get; set; }
+        public int ServiceID { get; set; }
     }
 }

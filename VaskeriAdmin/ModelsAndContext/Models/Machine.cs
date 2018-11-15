@@ -19,10 +19,48 @@ namespace ModelsAndContext.Models
         [DisplayName("Machine type")]
         public MachineType Type { get; set; }
 
-        [DisplayName("Reserved")]
-        public bool Reserved { get; set; }
+        [DisplayName("In Use")]
+        public bool InUse { get; set; }
 
-        public WasherService Service { get; set; }
+        [Required]
+        public int ServiceID { get; set; }
+
+        [DisplayName("Current program")]
+        public int SelectedProgram
+        {
+            get
+            {
+                switch (Type)
+                {
+                    case MachineType.WASHER:
+                        if (WashingProg != null)
+                        {
+                            return WashingProg.Id;
+                        }
+                        else
+                        {
+                            return -1;
+                        }
+                    case MachineType.DRYER:
+                        if (DryerProg != null)
+                        {
+                            return DryerProg.Id;
+                        }
+                        else
+                        {
+                            return -1;
+                        }
+                    default:
+                        return -1;
+                }
+            }
+        }
+
+        public DryerProgram DryerProg { get; set; }
+        public WashingProgram WashingProg { get; set; }
+
+
+        public List<Reservation> Reservations { get; set; }
     }
 
     public enum MachineType

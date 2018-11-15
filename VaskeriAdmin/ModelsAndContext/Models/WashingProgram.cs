@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,7 +10,8 @@ namespace ModelsAndContext.Models
 {
     public class WashingProgram : MachineProgram
     {
-        public int Temperatur { get; set; }
+        [Required]
+        [DisplayName("Water used pr hour")]
         public float WaterUsed { get; set; }
 
         public float Price { get

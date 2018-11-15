@@ -1,0 +1,57 @@
+﻿@model VaskeriClient.Models.StartMachineModel
+
+@{
+    ViewBag.Title = "StartMachine";
+}
+
+<h2>Start a Machine</h2>
+
+<div>
+    @using (Html.BeginForm())
+    {
+        <div class="form-horizontal">
+            <div class="form-group">
+                <h3>Washers</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Machine</th>
+                            <th>Program</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td>@Html.DropDownListFor(m => m.WashingMachines, new SelectList(Model.WashingMachines, "Id", "Number"))</td>
+                        <td>@Html.DropDownListFor(p => p.WashingPrograms, new SelectList(Model.WashingPrograms, "Id", "Name"), "Choose program")</td>
+                        <td><input type="submit" value="Start" class="btn btn-default" /> <input type="hidden" id="type" name="type" value="Washer"></td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+    }
+
+    @using (Html.BeginForm())
+    {
+        <div class="form-horizontal">
+            <div class="form-group">
+                <h3>Dryers</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Machine</th>
+                            <th>Program</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td>@Html.DropDownListFor(m => m.DryerMachines, new SelectList(Model.DryerMachines, "Id", "Number"))</td>
+                        <td>@Html.DropDownListFor(p => p.DryerPrograms, new SelectList(Model.DryerPrograms, "Id", "Name"), "Choose program")</td>
+                        <td><input type="submit" value="Start" class="btn btn-default" /> <input type="hidden" id="type" name="type" value="Dryer"></td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+    }
+</div>

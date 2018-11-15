@@ -1,30 +1,35 @@
-﻿using System;
+﻿using ModelsAndContext.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using VaskeriClient.Services;
 
 namespace VaskeriClient.Controllers
 {
     public class HomeController : Controller
     {
+        private DBManager dbm = new DBManager();
+
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult About()
+        [HttpPost]
+        public ActionResult Index(User user)
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+            if (dbm.UserExists(user))
+            {
+                Session["user"] = user;
+                return RedirectToAction("Index", "Member");
+            }
+            else
+            {
+                return View();
+            }
         }
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
     }
 }

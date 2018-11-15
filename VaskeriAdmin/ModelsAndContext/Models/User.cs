@@ -12,6 +12,9 @@ namespace ModelsAndContext.Models
         public int Id { get; set; }
 
         [Required]
+        public int ServiceID { get; set; }
+
+        [Required]
         [DisplayName("Username")]
         public string Username { get; set; }
 
@@ -23,9 +26,13 @@ namespace ModelsAndContext.Models
         public string Alias { get; set; }
 
         [DisplayName("Number of reservations")]
-        public int NumberOfReservations { get { return Reservations.Count; } }
+        public int NumberOfReservations { get; set; }
 
-        public WasherService Service { get; set; }
+        [DisplayName("Account")]
+        public float Konti { get; set; }
+
+
+        public List<DoneReservation> DoneReservations { get; set; }
         public List<Reservation> Reservations { get; set; }
     }
 }

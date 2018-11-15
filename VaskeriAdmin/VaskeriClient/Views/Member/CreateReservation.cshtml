@@ -1,0 +1,59 @@
+﻿@model VaskeriClient.Models.ReservationView
+
+@{
+    ViewBag.Title = "CreateReservation";
+}
+
+<h2>CreateReservation</h2>
+
+<div>
+    @using (Html.BeginForm())
+    {
+        <div class="form-horizontal">
+            <div class="form-group">
+                <input type="date" name="date" min="@(DateTime.Now.Year + "-" + DateTime.Now.Month
+                        + "-" + DateTime.Now.Day)" max="@(DateTime.Now.Year + "-" + DateTime.Now.Month
+                        + "-" + (DateTime.Now.Day + 7))" />
+                @Html.DropDownListFor(wt => wt.WashTimes, new SelectList(Model.WashTimes, "Id", "Description"), "Time")
+
+                <table class="table">
+                    <tr>
+                        <th>Machine Number</th>
+                        <th>Type</th>
+                        <th>Reserve</th>
+                    </tr>
+
+                    @foreach (var item in Model.Machines)
+                    {
+                    <tr>
+                        <td>
+                            @item.Number
+                        </td>
+                        @if (item.Type == ModelsAndContext.Models.MachineType.WASHER)
+                        {
+                            <td>Washer</td>
+                        }
+                        else if (item.Type == ModelsAndContext.Models.MachineType.DRYER)
+                        {
+                            <td>Dryer</td>
+                        } else
+                        {
+                            <td>NaN</td>
+                        }
+                        <td>
+                            <input type="checkbox" name="reserve" value="@item.Id" />
+                        </td>
+                    </tr>
+                    }
+
+                </table>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="reserve" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+</div>

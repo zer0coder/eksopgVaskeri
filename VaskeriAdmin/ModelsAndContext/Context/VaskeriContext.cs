@@ -13,8 +13,12 @@ namespace ModelsAndContext.Context
         public VaskeriContext() : base("name=WasherServiceDb") { }
 
         public DbSet<WasherService> WasherServices { get; set; }
-        public DbSet<User> Users { get; set; }
         public DbSet<Machine> Machines { get; set; }
+        public DbSet<WashTime> WashTimes { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<WashingProgram> WashingPrograms { get; set; }
+        public DbSet<DryerProgram> DryerPrograms { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
+        public DbSet<DoneReservation> DoneReservations { get; set; }
     }
 }

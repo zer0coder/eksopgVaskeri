@@ -20,6 +20,10 @@ namespace ModelsAndContext.Models
         [DisplayName("Only during daytime?")]
         public bool DaytimeOnly { get; set; }
 
+        [Required]
+        [DisplayName("Allowed max reservations?")]
+        public int AllowedMaxReservations { get; set; }
+
         public List<Machine> Machines { get; set; }
         public List<WashTime> WashTimes { get; set; }
         public List<User> Users { get; set; }
