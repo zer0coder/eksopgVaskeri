@@ -85,6 +85,7 @@ namespace VaskeriClient.Services
 
                 if(_res.Date+time.Length <= DateTime.Now && _res.Date + time.Length + new TimeSpan(0,1,0) > DateTime.Now)
                 {
+                    _res.Active = true;
                     machines.ForEach(_m =>
                     {
                         machines.Remove(_m);
