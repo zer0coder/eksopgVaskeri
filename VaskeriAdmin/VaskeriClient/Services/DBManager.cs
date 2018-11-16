@@ -6,12 +6,22 @@ using System.Linq;
 using System.Web;
 using System.Data.Entity;
 using VaskeriClient.Models;
+using System.Threading.Tasks;
+using System.Diagnostics;
+using System.Threading;
 
 namespace VaskeriClient.Services
 {
     public class DBManager
     {
         private VaskeriContext db = new VaskeriContext();
+
+        public async Task<bool> Debug_ClearAllMachinesAsync()
+        {
+            await db.Machines.ForEachAsync(m => m.InUse = false);
+            db.SaveChanges();
+            return true;
+        }
 
         public bool UserExists(User user)
         {
@@ -49,9 +59,12 @@ namespace VaskeriClient.Services
 
             if (user != null)
             {
+                List<Machine> machines = db.Machines.Where(m => m.ServiceID == user.ServiceID).ToList();
+                CheckMachinesInUse(machines);
+
                 front.User = user;
                 front.Service = db.WasherServices.FirstOrDefault(s => s.Id == user.ServiceID);
-                front.Machines = db.Machines.Where(m => m.ServiceID == user.ServiceID).ToList();
+                front.Machines = machines;
                 front.Reservations = GetReservations(user);
                 front.DoneReservations = GetDoneReservations(user);
             }
@@ -141,15 +154,30 @@ namespace VaskeriClient.Services
 
             int machineId = Int32.Parse(mid);
             int programId = Int32.Parse(pid);
+            DryerProgram dp = null;
+            WashingProgram wp = null;
 
             Machine mac = db.Machines.FirstOrDefault(m => m.Id == machineId);
             mac.InUse = true;
+            mac.StartTime = DateTime.Now;
+
+            if (type == "Dryer")
+            {
+                dp = db.DryerPrograms.FirstOrDefault(i => i.Id == programId);
+                mac.EndTime = DateTime.Now.AddMilliseconds(dp.Length*1000*60);
+            }
+            else if (type == "Washer")
+            {
+                wp = db.WashingPrograms.FirstOrDefault(i => i.Id == programId);
+                mac.EndTime = DateTime.Now.AddMilliseconds(wp.Length * 1000 * 60);
+            }
 
             Reservation reservation = new Reservation();
             reservation.SID = user.ServiceID;
             reservation.UserID = user.Id;
             reservation.Date = DateTime.Now;
             reservation.TimeID = -1;
+            reservation.Finished = true;
             reservation.Machines = new List<Machine>() { mac };
 
             DoneReservation doneReservation = new DoneReservation();
@@ -158,12 +186,10 @@ namespace VaskeriClient.Services
 
             if (type == "Dryer")
             {
-                DryerProgram dp = db.DryerPrograms.FirstOrDefault(i => i.Id == programId);
                 doneReservation.DryerProgs = new List<DryerProgram>() { dp };
             }
             else if (type == "Washer")
             {
-                WashingProgram wp = db.WashingPrograms.FirstOrDefault(i => i.Id == programId);
                 doneReservation.WashingProgs = new List<WashingProgram>() { wp };
             }
 
@@ -174,8 +200,22 @@ namespace VaskeriClient.Services
 
 
 
+        private void CheckMachinesInUse(List<Machine> machines)
+        {
+            machines.ForEach(m => CheckMachine(m));
+        }
 
-
+        private void CheckMachine(Machine machine)
+        {
+            if(machine.InUse)
+            {
+                if(DateTime.Now >= machine.EndTime)
+                {
+                    machine.InUse = false;
+                    db.SaveChanges();
+                }
+            }
+        }
 
         private int[] GetDate(string date)
         {

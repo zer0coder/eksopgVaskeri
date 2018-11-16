@@ -65,9 +65,10 @@
                         </ListView>
                     </GroupBox>
                     <StackPanel Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Orientation="Horizontal">
-                        <Button Margin="0 5 5 5" Width="65" Name="CreateBtn" Click="CreateBtn_Click">Opret</Button>
-                        <Button Margin="5" Width="65" Name="DeleteBtn">Slet</Button>
-                        <Button Margin="5" Width="65" Name="ClearBtn">Clear</Button>
+                        <Button Margin="0 5 5 5" Width="80" Name="CreateBtn" Click="CreateBtn_Click" IsEnabled="False">Opret bruger</Button>
+                        <CheckBox Name="ChkBox_NewUser" Content="New User?" VerticalContentAlignment="Center" Checked="ChkBox_NewUser_Checked" IsChecked="False"/>
+                        <Button Margin="30 5 5 5" Width="80" Name="DeleteBtn" Click="DeleteBtn_Click">Slet bruger</Button>
+                        <Button Margin="5" Width="80" Name="ClearBtn" Click="ClearBtn_Click">Clear</Button>
                     </StackPanel>
                 </Grid>
             </Grid>

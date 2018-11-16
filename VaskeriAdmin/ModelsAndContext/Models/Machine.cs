@@ -22,6 +22,12 @@ namespace ModelsAndContext.Models
         [DisplayName("In Use")]
         public bool InUse { get; set; }
 
+        [DisplayName("Started")]
+        public DateTime? StartTime { get; set; }
+
+        [DisplayName("Ends")]
+        public DateTime? EndTime { get; set; }
+
         [Required]
         public int ServiceID { get; set; }
 

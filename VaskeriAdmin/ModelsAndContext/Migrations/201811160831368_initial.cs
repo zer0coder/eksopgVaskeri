@@ -3,7 +3,7 @@ namespace ModelsAndContext.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class reset : DbMigration
+    public partial class initial : DbMigration
     {
         public override void Up()
         {
@@ -13,6 +13,7 @@ namespace ModelsAndContext.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         UID = c.Int(nullable: false),
+                        Paid = c.Boolean(nullable: false),
                         Reservation_Id = c.Int(nullable: false),
                         User_Id = c.Int(),
                     })
@@ -45,6 +46,7 @@ namespace ModelsAndContext.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         Active = c.Boolean(nullable: false),
                         UserID = c.Int(nullable: false),
+                        SID = c.Int(nullable: false),
                         Date = c.DateTime(nullable: false),
                         TimeID = c.Int(nullable: false),
                         Finished = c.Boolean(nullable: false),

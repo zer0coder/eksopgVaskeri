@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using VaskeriClient.Services;
@@ -29,6 +30,13 @@ namespace VaskeriClient.Controllers
             {
                 return View();
             }
+        }
+
+        public async Task<ActionResult> ResetMachines()
+        {
+            await dbm.Debug_ClearAllMachinesAsync();
+
+            return RedirectToAction("Index", "Home");
         }
 
     }

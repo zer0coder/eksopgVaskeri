@@ -23,7 +23,10 @@ namespace VaskeriClient.Models
                 {
                     foreach (var item in DoneReservations)
                     {
-                        total += item.Cost;
+                        if (!item.Paid)
+                        {
+                            total += item.Cost;
+                        }
                     }
                 }
 

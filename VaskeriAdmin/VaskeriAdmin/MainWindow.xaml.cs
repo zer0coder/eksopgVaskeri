@@ -57,6 +57,7 @@ namespace VaskeriAdmin
                 UserDetail.DataContext = user;
                 currentUser = user;
                 RefreshReservations();
+                DeleteBtn.IsEnabled = true;
             }
         }
 
@@ -64,10 +65,13 @@ namespace VaskeriAdmin
         {
             string un = tbUsername.Text;
             string alias = tbAlias.Text;
-            string pass = "123456789";
+            string pass = "abc123";
 
             User user = new User() { Username = un, Password = pass, Alias = alias, ServiceID = currentService.Id };
             dbm.AddNewUser(user);
+            ChkBox_NewUser.IsChecked = false;
+            CreateBtn.IsEnabled = false;
+            RefreshUsers();
         }
 
         private void RefreshUsers()
@@ -89,16 +93,65 @@ namespace VaskeriAdmin
             }
         }
 
+        private void ClearReservations()
+        {
+            lvUserReservations.ItemsSource = null;
+        }
+
         private void RefreshKonti(List<DoneReservation> list)
         {
             float cost = 0f;
 
             foreach (var item in list)
             {
-                cost += item.Cost;
+                if (!item.Paid)
+                {
+                    cost += item.Cost;
+                }
             }
 
             tbKonti.Text = cost.ToString();
+        }
+
+        private void ClearBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentUser != null)
+            {
+                dbm.ClearKonti(currentUser);
+                RefreshReservations();
+            }
+        }
+
+        private void ChkBox_NewUser_Checked(object sender, RoutedEventArgs e)
+        {
+            if(ChkBox_NewUser.IsChecked == true)
+            {
+                currentUser = null;
+                UserDetail.DataContext = null;
+                tbUsername.Text = "";
+                tbAlias.Text = "";
+                CreateBtn.IsEnabled = true;
+                DeleteBtn.IsEnabled = false;
+            }
+            else if (ChkBox_NewUser.IsChecked == false)
+            {
+                tbUsername.Text = "";
+                tbAlias.Text = "";
+                CreateBtn.IsEnabled = false;
+                DeleteBtn.IsEnabled = false;
+            }
+
+            UserList.SelectedItem = null;
+            ClearReservations();
+        }
+
+        private void DeleteBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if(currentUser != null)
+            {
+                dbm.DeleteUser(currentUser);
+                RefreshUsers();
+            }
         }
     }
 }

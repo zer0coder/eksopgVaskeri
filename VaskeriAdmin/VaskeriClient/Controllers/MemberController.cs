@@ -108,7 +108,7 @@ namespace VaskeriClient.Controllers
 
                 dbm.StartMachine(mid, pid, type, user);
 
-                return View("Index");
+                return RedirectToAction("Index", "Member");
             }
             else
             {

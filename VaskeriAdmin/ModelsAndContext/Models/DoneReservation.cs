@@ -15,6 +15,9 @@ namespace ModelsAndContext.Models
         public int UID { get; set; }
 
         [Required]
+        public bool Paid { get; set; }
+
+        [Required]
         public Reservation Reservation { get; set; }
 
         public float Cost

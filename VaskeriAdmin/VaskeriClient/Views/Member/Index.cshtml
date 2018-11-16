@@ -10,6 +10,43 @@
     <hr />
     <dl class="dl-horizontal"></dl>
     <div>
+        <h4>Machines</h4>
+        <p>@Html.ActionLink("Start a machine", "StartMachine")</p>
+        <table class="table">
+
+            <thead>
+                <tr>
+                    <th>Machine Number</th>
+                    <th>Type</th>
+                    <th>In Use?</th>
+                </tr>
+            </thead>
+
+            @foreach (var item in Model.Machines)
+            {
+                <tr>
+                    <td>@item.Number</td>
+                    @if (item.Type == ModelsAndContext.Models.MachineType.WASHER)
+                    {
+                        <td>Washingmachine</td>
+                    }
+                    else
+                    {
+                        <td>Dryer</td>
+                    }
+
+                    @if (item.InUse)
+                    {
+                        <td>In Use... (Time left: @{TimeSpan? span = item.EndTime-DateTime.Now; }@span)</td>
+                    }
+                    else
+                    {
+                        <td>Free</td>
+                    }
+                </tr>
+            }
+        </table>
+        <hr />
         <h3>Forbrug</h3>
         <table class="table">
 
@@ -29,7 +66,9 @@
             }
         </table>
         <h4>Total forbrug: @Model.TotalCost</h4>
-        <hr />
+    </div>
+    <hr />
+    <div>
         <h3>Reservations (Current: @Model.User.NumberOfReservations)</h3>
         @if (@Model.User.NumberOfReservations < Model.Service.AllowedMaxReservations)
         {
@@ -70,46 +109,6 @@
                     <td>@item.Date</td>
                     <td>@item.TimeID</td>
                 </tr>
-            }
-        </table>
-    </div>
-    <hr />
-    <div>
-        <h4>Machines</h4>
-        <p>@Html.ActionLink("Start a machine", "StartMachine")</p>
-        <table class="table">
-
-            <thead>
-                <tr>
-                    <th>Machine Number</th>
-                    <th>Type</th>
-                    <th>Reserved?</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-
-            @foreach (var item in Model.Machines)
-            {
-            <tr>
-                <td>@item.Number</td>
-                @if (item.Type == ModelsAndContext.Models.MachineType.WASHER)
-                {
-                    <td>Washingmachine</td>
-                }
-                else
-                {
-                    <td>Dryer</td>
-                }
-
-                @if(item.InUse)
-                {
-                    <td>In Use...</td>
-                } else
-                {
-                    <td>Free</td>
-                }
-            </tr>
             }
         </table>
     </div>
