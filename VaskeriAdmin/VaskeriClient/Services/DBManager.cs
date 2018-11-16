@@ -76,7 +76,23 @@ namespace VaskeriClient.Services
         {
             ReservationView viewmodel = new ReservationView();
 
-            viewmodel.Machines = db.Machines.Where(m => m.ServiceID == ServiceID && m.InUse == false).ToList();
+            List<Machine> machines = db.Machines.Include(m => m.Reservations).Where(m => m.ServiceID == ServiceID && m.InUse == false).ToList();
+            List<Reservation> reservations = db.Reservations.Include(_res => _res.Machines).Where(_res => _res.SID == ServiceID && _res.Finished == false).ToList();
+
+            reservations.ForEach(_res =>
+            {
+                WashTime time = db.WashTimes.FirstOrDefault(wt => wt.Id == _res.TimeID);
+
+                if(_res.Date+time.Length <= DateTime.Now && _res.Date + time.Length + new TimeSpan(0,1,0) > DateTime.Now)
+                {
+                    machines.ForEach(_m =>
+                    {
+                        machines.Remove(_m);
+                    });
+                }
+            });
+
+            viewmodel.Machines = machines;
             viewmodel.WashTimes = db.WashTimes.Where(wt => wt.ServiceID == ServiceID).ToList();
 
             return viewmodel;
@@ -90,6 +106,7 @@ namespace VaskeriClient.Services
             Reservation reservation = new Reservation();
             reservation.Active = false;
             reservation.UserID = user.Id;
+            reservation.SID = user.ServiceID;
             reservation.Date = new DateTime(dato[0], dato[1], dato[2]);
             reservation.TimeID = Int32.Parse(time);
 

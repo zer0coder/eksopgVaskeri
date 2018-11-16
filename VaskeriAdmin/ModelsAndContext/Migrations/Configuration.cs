@@ -35,7 +35,7 @@ namespace ModelsAndContext.Migrations
             Machine machine4 = new Machine() { Id = 4, ServiceID = 1, Number = 4, Type = MachineType.DRYER, InUse = false };
             Machine machine5 = new Machine() { Id = 5, ServiceID = 1, Number = 5, Type = MachineType.DRYER, InUse = false };
 
-            Machine machine6 = new Machine() { Id = 6, ServiceID = 2, Number = 1, Type = MachineType.WASHER, InUse = true };
+            Machine machine6 = new Machine() { Id = 6, ServiceID = 2, Number = 1, Type = MachineType.WASHER, InUse = false };
             Machine machine7 = new Machine() { Id = 7, ServiceID = 2, Number = 2, Type = MachineType.DRYER, InUse = false };
             Machine machine8 = new Machine() { Id = 8, ServiceID = 2, Number = 3, Type = MachineType.WASHER, InUse = false };
 
@@ -57,6 +57,7 @@ namespace ModelsAndContext.Migrations
             WashingProgram washingProgram4 = new WashingProgram() { Id = 4, ServiceID = 2, Name = "Farvevask", Length = 120, ElectricityUsed = 7f, Temperatur = 60, WaterUsed = 40f };
             WashingProgram washingProgram5 = new WashingProgram() { Id = 5, ServiceID = 2, Name = "Turbovask", Length = 90, ElectricityUsed = 5f, Temperatur = 60, WaterUsed = 20f };
             WashingProgram washingProgram6 = new WashingProgram() { Id = 6, ServiceID = 1, Name = "1 Minute", Length = 1, ElectricityUsed = 5f, Temperatur = 60, WaterUsed = 20f };
+            WashingProgram washingProgram7 = new WashingProgram() { Id = 7, ServiceID = 2, Name = "1 Minute", Length = 1, ElectricityUsed = 5f, Temperatur = 60, WaterUsed = 20f };
 
 
             DryerProgram dryerProgram1 = new DryerProgram() { Id = 1, ServiceID = 1, Name = "Skabstoert", Length = 150, Temperatur = 55, ElectricityUsed = 5f };
@@ -64,6 +65,7 @@ namespace ModelsAndContext.Migrations
             DryerProgram dryerProgram3 = new DryerProgram() { Id = 3, ServiceID = 2, Name = "Skabstoert+", Length = 150, Temperatur = 70, ElectricityUsed = 5f };
             DryerProgram dryerProgram4 = new DryerProgram() { Id = 4, ServiceID = 2, Name = "QuickDry", Length = 45, Temperatur = 80, ElectricityUsed = 10f };
             DryerProgram dryerProgram5 = new DryerProgram() { Id = 5, ServiceID = 1, Name = "1 Minute", Length = 1, Temperatur = 80, ElectricityUsed = 10f };
+            DryerProgram dryerProgram6 = new DryerProgram() { Id = 5, ServiceID = 2, Name = "1 Minute", Length = 1, Temperatur = 80, ElectricityUsed = 10f };
 
 
             // Users
@@ -128,12 +130,14 @@ namespace ModelsAndContext.Migrations
             context.WashingPrograms.AddOrUpdate(wp => wp.Id, washingProgram4);
             context.WashingPrograms.AddOrUpdate(wp => wp.Id, washingProgram5);
             context.WashingPrograms.AddOrUpdate(wp => wp.Id, washingProgram6);
+            context.WashingPrograms.AddOrUpdate(wp => wp.Id, washingProgram7);
 
             context.DryerPrograms.AddOrUpdate(dp => dp.Id, dryerProgram1);
             context.DryerPrograms.AddOrUpdate(dp => dp.Id, dryerProgram2);
             context.DryerPrograms.AddOrUpdate(dp => dp.Id, dryerProgram3);
             context.DryerPrograms.AddOrUpdate(dp => dp.Id, dryerProgram4);
             context.DryerPrograms.AddOrUpdate(dp => dp.Id, dryerProgram5);
+            context.DryerPrograms.AddOrUpdate(dp => dp.Id, dryerProgram6);
 
             context.Users.AddOrUpdate(s => s.Id, user1);
             context.Users.AddOrUpdate(s => s.Id, user2);
